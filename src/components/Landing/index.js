@@ -63,10 +63,12 @@ const submitForm = event => {
     const year = document.getElementById('year-button').innerHTML;
     let stream = document.getElementById('stream-button').innerHTML;
 
+    //make it readable to the api
     let streamObj = {
         "Netflix" : 'netflix',
         "HBO Max" : 'hbo',
-        "Amazon Prime Video" : 'amazon_prime'
+        "Amazon Prime Video" : 'amazon_prime',
+        "STREAM" : "STREAM"
     }
     stream = streamObj[stream];
 
@@ -78,31 +80,50 @@ const submitForm = event => {
         year: year,
         stream: stream
     }
-
     console.log(jsonObject);
-    console.log(`https://rv-casecomp.herokuapp.com/` + type + `?platform=` + stream);
 
-    axios.get(`https://rv-casecomp.herokuapp.com/` + type + `?platform=` + stream)
+    if (stream === 'STREAM') {
+        justMediaAPI(jsonObject)
+    } else {
+        mediaStreamAPI(jsonObject)
+    }
+
+    //jsonFormObjectStringify = JSON.stringify(jsonObject);
+}
+
+function justMediaAPI(paraData) {
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type)
+    .then(res => {
+      console.log(res.data);
+      filter(res.data, paraData);
+    })
+    .catch(res => {
+      console.log('Error getting API');
+    }) 
+}
+
+function mediaStreamAPI(paraData) {
+    console.log(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream);
+
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream)
       .then(res => {
         console.log(res.data);
-        filter(res.data, rating);
+        filter(res.data, paraData);
 
       })
       .catch(res => {
         console.log('Error getting API');
       })
-
-    return jsonObject;
-    //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
 
-function filter(apiData, rating) {
+function filter(apiData, paraData) {
+
     for (var i = 0; i < apiData.length; i++) {
-        if (apiData[i].rating === rating){
+        if (apiData[i].rating === paraData.rating){
             console.log(apiData[i])
         }
     }
-    console.log('Hey a function works!')
+    console.log('Finished filtering!')
 }
 
 
