@@ -3,7 +3,10 @@ import { faAngleDown, faExclamationCircle, faTicketAlt } from '@fortawesome/free
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bulma/css/bulma.min.css';
-import './styles.css'
+import './styles.css';
+import axios from 'axios';
+
+let jsonObject = {};
 
 function triggerType() {
     if (document.getElementById("type-dropdown").classList.contains("is-active")) {
@@ -54,7 +57,16 @@ const submitForm = event => {
     const type = document.getElementById('type-button').innerHTML;
     const rating = document.getElementById('rating-button').innerHTML;
     const year = document.getElementById('year-button').innerHTML;
-    const stream = document.getElementById('stream-button').innerHTML;
+    let stream = document.getElementById('stream-button').innerHTML;
+
+    //make it readable to the api
+    let streamObj = {
+        "Netflix" : 'netflix',
+        "HBO Max" : 'hbo',
+        "Amazon Prime Video" : 'amazon_prime',
+        "STREAM" : "STREAM"
+    }
+    stream = streamObj[stream];
 
     if (type === "TYPE") {
         document.getElementById('main-error-msg').style.display = 'flex';
@@ -72,6 +84,73 @@ const submitForm = event => {
         console.log(jsonObject);
         return jsonObject;
     }
+    console.log(jsonObject);
+
+    if (stream === 'STREAM') {
+        justMediaAPI(jsonObject);
+    } else {
+        mediaStreamAPI(jsonObject);
+    }
+
+    //jsonFormObjectStringify = JSON.stringify(jsonObject);
+}
+
+function justMediaAPI(paraData) {
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type)
+    .then(res => {
+      console.log(res.data);
+      var filteredData = filter(res.data, paraData);
+      console.log(filteredData);
+    })
+    .catch(res => {
+      console.log('Error getting API');
+    }) 
+}
+
+function mediaStreamAPI(paraData) {
+    console.log(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream);
+
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream)
+      .then(res => {
+        console.log(res.data);
+        var filteredData = filter(res.data, paraData);
+        console.log(filteredData);;
+      })
+      .catch(res => {
+        console.log('Error getting API');
+      })
+}
+
+function filter(apiData, paraData) {
+    var result = [];
+    var i = 0;
+    if (paraData.year !== 'YEAR' && paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3) && apiData[i].rating === paraData.rating) {
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else if (paraData.year !== 'YEAR') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3)){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else if (paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].rating === paraData.rating){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else {
+        result = apiData;
+    }
+    
+    console.log('Finished filtering!');
+    return result;
 }
 
 
@@ -107,16 +186,16 @@ class Landing extends React.Component {
                             <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                                 <div className="button-text-container"><span id="type-button" className="main-button-name">TYPE</span>
                                     <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
-                            </button>
-                        </div>
-                        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div id="type" className="dropdown-content">
-                                <div onClick={populateForm} className="dropdown-item movie-option">
-                                    Movie
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item is-active">
-                                    TV Show
-                                </div>
+                        </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div id="type" className="dropdown-content">
+                            <div onClick={populateForm} className="dropdown-item movie-option">
+                                Movie
+                            </div>
+                            <div onClick={populateForm}className="dropdown-item is-active">
+                                Show
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -125,21 +204,21 @@ class Landing extends React.Component {
                             <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                                 <div className="button-text-container"><span id="rating-button" className="main-button-name">RATING</span>
                                     <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
-                            </button>
-                        </div>
-                        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div id="rating" className="dropdown-content">
-                                <div onClick={populateForm} className="dropdown-item">
-                                    NR
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item">
-                                    PG
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item">
-                                    PG-13
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item">
-                                    R
+                        </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div id="rating" className="dropdown-content">
+                            <div onClick={populateForm} className="dropdown-item">
+                                NR
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                PG
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                PG-13
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                R
                                 </div>
                             </div>
                         </div>
@@ -149,22 +228,31 @@ class Landing extends React.Component {
                             <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                                 <div className="button-text-container"><span id="year-button" className="main-button-name">YEAR</span>
                                     <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
-                            </button>
-                        </div>
-                        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div id="year" className="dropdown-content">
-                                <div onClick={populateForm} className="dropdown-item">
-                                    2020s
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item">
-                                    2010s
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item is-active">
-                                    2000s
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item is-active">
-                                    1999 and older
-                                </div>
+                        </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div id="year" className="dropdown-content">
+                            <div onClick={populateForm} className="dropdown-item is-active">
+                                2010s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                2000s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1990s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1980s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1970s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1960s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1950s
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -173,19 +261,19 @@ class Landing extends React.Component {
                             <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                                 <div className="button-text-container"><span id="stream-button" className="main-button-name">STREAM</span>
                                     <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
-                            </button>
-                        </div>
-                        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div id="stream" className="dropdown-content">
-                                <div onClick={populateForm} className="dropdown-item">
-                                    Netflix
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item is-active">
-                                    HBO Max
-                                </div>
-                                <div onClick={populateForm} className="dropdown-item is-active">
-                                    Amazon Prime Video
-                                </div>
+                        </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div id="stream" className="dropdown-content">
+                            <div onClick={populateForm} className="dropdown-item is-active">
+                                Netflix
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                HBO Max
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                Amazon Prime Video
+                            </div>
                             </div>
                         </div>
                     </div>

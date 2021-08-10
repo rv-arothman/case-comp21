@@ -1,6 +1,5 @@
 import "./App.css"
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from "./components/Landing"
 import ResultsPage from "./components/Results"
