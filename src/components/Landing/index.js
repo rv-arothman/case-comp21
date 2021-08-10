@@ -83,9 +83,9 @@ const submitForm = event => {
     console.log(jsonObject);
 
     if (stream === 'STREAM') {
-        justMediaAPI(jsonObject)
+        justMediaAPI(jsonObject);
     } else {
-        mediaStreamAPI(jsonObject)
+        mediaStreamAPI(jsonObject);
     }
 
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
@@ -95,7 +95,8 @@ function justMediaAPI(paraData) {
     axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type)
     .then(res => {
       console.log(res.data);
-      filter(res.data, paraData);
+      var filteredData = filter(res.data, paraData);
+      console.log(filteredData);
     })
     .catch(res => {
       console.log('Error getting API');
@@ -108,8 +109,8 @@ function mediaStreamAPI(paraData) {
     axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream)
       .then(res => {
         console.log(res.data);
-        filter(res.data, paraData);
-
+        var filteredData = filter(res.data, paraData);
+        console.log(filteredData);;
       })
       .catch(res => {
         console.log('Error getting API');
@@ -117,13 +118,35 @@ function mediaStreamAPI(paraData) {
 }
 
 function filter(apiData, paraData) {
-
-    for (var i = 0; i < apiData.length; i++) {
-        if (apiData[i].rating === paraData.rating){
-            console.log(apiData[i])
+    var result = [];
+    var i = 0;
+    if (paraData.year !== 'YEAR' && paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3) && apiData[i].rating === paraData.rating) {
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
         }
+    } else if (paraData.year !== 'YEAR') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3)){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else if (paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].rating === paraData.rating){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else {
+        result = apiData;
     }
-    console.log('Finished filtering!')
+    
+    console.log('Finished filtering!');
+    return result;
 }
 
 
@@ -221,13 +244,13 @@ function Landing() {
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="year" className="dropdown-content">
                             <div onClick={populateForm} className="dropdown-item">
-                                2021
+                                2010s
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
-                                2020
+                                2000s
                             </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
-                                2019
+                                1990s
                             </div>
                         </div>
                     </div>
