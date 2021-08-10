@@ -1,0 +1,80 @@
+.main {
+    text-align: center;
+    background-color: #9cc;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'TWCen'
+}
+
+.main-header {
+    padding-top: 9rem;
+    padding-bottom: 5rem;
+    font-size: 100px;
+}
+
+.header {
+    color: #c00;
+}
+
+.main-button-selection {
+    padding-left: 10rem;
+    padding-right: 10rem;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.select:not(.is-multiple):not(.is-loading)::after { 
+    border-color: #c00;
+}
+
+.button {
+    color: #c00;
+    border: #c00 solid 2px;
+    padding: 1.5rem;
+}
+
+.button-size {
+    width: 175px;
+}
+
+.button-text-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-button-name {
+    font-family: 'TWCen';
+    color: #999;
+    font-size: 30px;
+}
+
+.main-show-me {
+    padding: 2.5rem;
+}
+
+.show-me {
+    color: #c00;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.main-pop-rand {
+    padding-left: 25rem;
+    padding-right: 25rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pop-rand {
+    font-family: 'TWCen';
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: #c00;
+    color: black;
+    font-size: 30px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}

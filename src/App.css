@@ -1,3 +1,9 @@
+
+@font-face {
+  font-family: 'TWCen';
+  src: local('TwCen'), url('./fonts/TWCen/TCCEB.ttf') format('truetype');
+}
+
 .App {
   text-align: center;
 }
