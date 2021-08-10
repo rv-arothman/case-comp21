@@ -158,6 +158,9 @@ function Landing() {
                             <div onClick={populateForm} className="dropdown-item">
                                 R
                             </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                NR
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -171,13 +174,16 @@ function Landing() {
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="year" className="dropdown-content">
                             <div onClick={populateForm} className="dropdown-item">
-                                2021
+                                2020s
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
-                                2020
+                                2010s
                             </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
-                                2019
+                                2000s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item is-active">
+                                1999 and older
                             </div>
                         </div>
                     </div>
@@ -194,23 +200,11 @@ function Landing() {
                             <div onClick={populateForm} className="dropdown-item">
                                 Netflix
                             </div>
-                            <div onClick={populateForm} className="dropdown-item">
-                                Hulu
-                            </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
                                 HBO Max
                             </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
-                                YouTube
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
                                 Amazon Prime Video
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Disney Plus
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Paramount Plus
                             </div>
                         </div>
                     </div>
