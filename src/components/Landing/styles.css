@@ -7,7 +7,7 @@
 }
 
 .main-header {
-    padding-top: 6rem;
+    padding-top: 4.5rem;
     padding-bottom: 5rem;
 }
 
@@ -118,6 +118,12 @@
     font-size: 30px;
     padding-left: 3rem;
     padding-right: 3rem;
+}
+
+.main-results-container {
+    display: none;
+    justify-content: space-evenly;
+    padding-top: 1.5rem;
 }
 
 .stream {
