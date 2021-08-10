@@ -3,6 +3,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import 'bulma/css/bulma.min.css';
 import './styles.css'
 
+//let jsonFormObjectStringify= "";
 
 function triggerGenre() {
     if (document.getElementById("genre-dropdown").classList.contains("is-active")) {
@@ -71,7 +72,7 @@ const submitForm = event => {
     }
 
     console.log(jsonObject);
-    return jsonObject;
+    //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
 
 
@@ -223,6 +224,7 @@ function Landing() {
                 <button onClick={submitForm} id="popular" className="button pop-rand">POPULAR</button>
                 <button onClick={submitForm} id="random" className="button pop-rand">RANDOM</button>
             </div>
+            
         </section>)
 }
 
