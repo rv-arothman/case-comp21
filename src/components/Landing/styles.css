@@ -24,8 +24,8 @@
 
 }
 
-.select:not(.is-multiple):not(.is-loading)::after { 
-    border-color: #c00;
+.dropdown-item:hover {
+    color: #c00;
 }
 
 .button {
@@ -49,6 +49,7 @@
     font-family: 'TWCen';
     color: #999;
     font-size: 30px;
+    overflow: hidden;
 }
 
 .main-show-me {
