@@ -7,13 +7,27 @@
 }
 
 .main-header {
-    padding-top: 9rem;
+    padding-top: 6rem;
     padding-bottom: 5rem;
-    font-size: 100px;
+}
+
+.main-ticket-header {
+    display: flex;
+
+}
+
+.ticket {
+    margin: .5rem;
+    margin-bottom: 0;
 }
 
 .header {
     color: #c00;
+    font-size: 100px;
+}
+
+.subtitle {
+    font-size: 40px;
 }
 
 .main-button-selection {

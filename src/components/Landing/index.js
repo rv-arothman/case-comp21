@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faTicketAlt } from '@fortawesome/free-solid-svg-icons'
 import 'bulma/css/bulma.min.css';
 import './styles.css';
 import axios from 'axios';
@@ -91,6 +91,8 @@ const submitForm = event => {
       .catch(res => {
         console.log('Error getting API');
       })
+
+    return jsonObject;
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
 
@@ -105,19 +107,25 @@ function filter(apiData, rating) {
 
 
 function Landing() {
+
     return (
         <section className="main">
             <div className="main-header">
-                <h1 className="header">RV MOVIE PICKS</h1>
+                <div className="main-ticker-header">
+                    <FontAwesomeIcon className="icon is-medium ticket" icon={faTicketAlt} />
+                    <FontAwesomeIcon className="icon is-medium ticket" icon={faTicketAlt} />
+                    <FontAwesomeIcon className="icon is-medium ticket" icon={faTicketAlt} />
+                </div>
+                <h1 className="header">DREAM STREAM</h1>
+                <h3 className="subtitle">RV MOVIE PICKS</h3>
             </div>
             <div className="main-button-selection">
                 <div id="genre-dropdown" className="dropdown" onClick={triggerGenre}>
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="genre-button" className="main-button-name">GENRE</span>
-                                <span className="icon is-medium">
-                                    <FontAwesomeIcon className="button-arrow" icon={faAngleDown} />
-                                </span></div>
+                                <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} />
+                            </div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -144,9 +152,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="type-button" className="main-button-name">TYPE</span>
-                                <span className="icon is-medium">
-                                    <FontAwesomeIcon className="button-arrow" icon={faAngleDown} />
-                                </span></div>
+                                    <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -164,9 +170,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="rating-button" className="main-button-name">RATING</span>
-                                <span className="icon is-medium">
-                                    <FontAwesomeIcon className="button-arrow" icon={faAngleDown} />
-                                </span></div>
+                                    <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -190,9 +194,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="year-button" className="main-button-name">YEAR</span>
-                                <span className="icon is-small">
-                                    <FontAwesomeIcon icon={faAngleDown} />
-                                </span></div>
+                                    <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -203,7 +205,7 @@ function Landing() {
                             <div onClick={populateForm} className="dropdown-item">
                                 2020
                             </div>
-                            <div onClick={populateForm}className="dropdown-item is-active">
+                            <div onClick={populateForm} className="dropdown-item is-active">
                                 2019
                             </div>
                         </div>
@@ -213,20 +215,18 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="stream-button" className="main-button-name">STREAM</span>
-                                <span className="icon is-small">
-                                    <FontAwesomeIcon icon={faAngleDown} />
-                                </span></div>
+                                    <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="stream" className="dropdown-content">
-                            <div onClick={populateForm} className="dropdown-item">
+                            <div onClick={populateForm} className="dropdown-item is-active">
                                 Netflix
                             </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
+                            <div onClick={populateForm} className="dropdown-item">
                                 HBO Max
                             </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
+                            <div onClick={populateForm} className="dropdown-item">
                                 Amazon Prime Video
                             </div>
                         </div>
@@ -240,7 +240,7 @@ function Landing() {
                 <button onClick={submitForm} id="popular" className="button pop-rand">POPULAR</button>
                 <button onClick={submitForm} id="random" className="button pop-rand">RANDOM</button>
             </div>
-            
+
         </section>)
 }
 
