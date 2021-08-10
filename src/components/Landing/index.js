@@ -245,14 +245,26 @@ class Landing extends React.Component {
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="year" className="dropdown-content">
-                            <div onClick={populateForm} className="dropdown-item">
+                            <div onClick={populateForm} className="dropdown-item is-active">
                                 2010s
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
                                 2000s
                             </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
+                            <div onClick={populateForm} className="dropdown-item">
                                 1990s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1980s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1970s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1960s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1950s
                             </div>
                         </div>
                     </div>
