@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faExclamationCircle, faTicketAlt } from '@fortawesome/free-solid-svg-icons'
 import 'bulma/css/bulma.min.css';
-import './styles.css'
+import './styles.css';
+import axios from 'axios';
 import React from 'react';
 
 //let jsonFormObjectStringify= "";
@@ -61,7 +62,16 @@ const submitForm = event => {
     const type = document.getElementById('type-button').innerHTML;
     const rating = document.getElementById('rating-button').innerHTML;
     const year = document.getElementById('year-button').innerHTML;
-    const stream = document.getElementById('stream-button').innerHTML;
+    let stream = document.getElementById('stream-button').innerHTML;
+
+    //make it readable to the api
+    let streamObj = {
+        "Netflix" : 'netflix',
+        "HBO Max" : 'hbo',
+        "Amazon Prime Video" : 'amazon_prime',
+        "STREAM" : "STREAM"
+    }
+    stream = streamObj[stream];
 
     const jsonObject = {
         popOrRand: popOrRand,
@@ -71,10 +81,73 @@ const submitForm = event => {
         year: year,
         stream: stream
     }
-
     console.log(jsonObject);
-    return jsonObject;
+
+    if (stream === 'STREAM') {
+        justMediaAPI(jsonObject);
+    } else {
+        mediaStreamAPI(jsonObject);
+    }
+
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
+}
+
+function justMediaAPI(paraData) {
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type)
+    .then(res => {
+      console.log(res.data);
+      var filteredData = filter(res.data, paraData);
+      console.log(filteredData);
+    })
+    .catch(res => {
+      console.log('Error getting API');
+    }) 
+}
+
+function mediaStreamAPI(paraData) {
+    console.log(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream);
+
+    axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream)
+      .then(res => {
+        console.log(res.data);
+        var filteredData = filter(res.data, paraData);
+        console.log(filteredData);;
+      })
+      .catch(res => {
+        console.log('Error getting API');
+      })
+}
+
+function filter(apiData, paraData) {
+    var result = [];
+    var i = 0;
+    if (paraData.year !== 'YEAR' && paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3) && apiData[i].rating === paraData.rating) {
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else if (paraData.year !== 'YEAR') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].release_date.substring(0, 3) === paraData.year.substring(0, 3)){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else if (paraData.rating !== 'RATING') {
+        for (i = 0; i < apiData.length; i++) {
+            if (apiData[i].rating === paraData.rating){
+                result.push(apiData[i]);
+                // console.log(apiData[i]);
+            }
+        }
+    } else {
+        result = apiData;
+    }
+    
+    console.log('Finished filtering!');
+    return result;
 }
 
 
@@ -133,8 +206,8 @@ class Landing extends React.Component {
                             <div onClick={populateForm} className="dropdown-item movie-option">
                                 Movie
                             </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                TV Show
+                            <div onClick={populateForm}className="dropdown-item is-active">
+                                Show
                             </div>
                         </div>
                     </div>
@@ -149,7 +222,7 @@ class Landing extends React.Component {
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="rating" className="dropdown-content">
                             <div onClick={populateForm} className="dropdown-item">
-                                G
+                                NR
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
                                 PG
@@ -172,14 +245,26 @@ class Landing extends React.Component {
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="year" className="dropdown-content">
-                            <div onClick={populateForm} className="dropdown-item">
-                                2021
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item">
-                                2020
-                            </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
-                                2019
+                                2010s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                2000s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1990s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1980s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1970s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1960s
+                            </div>
+                            <div onClick={populateForm} className="dropdown-item">
+                                1950s
                             </div>
                         </div>
                     </div>
@@ -193,26 +278,14 @@ class Landing extends React.Component {
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="stream" className="dropdown-content">
-                            <div onClick={populateForm} className="dropdown-item">
+                            <div onClick={populateForm} className="dropdown-item is-active">
                                 Netflix
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
-                                Hulu
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
                                 HBO Max
                             </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                YouTube
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
+                            <div onClick={populateForm} className="dropdown-item">
                                 Amazon Prime Video
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Disney Plus
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Paramount Plus
                             </div>
                         </div>
                     </div>
