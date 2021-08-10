@@ -85,11 +85,22 @@ const submitForm = event => {
     axios.get(`https://rv-casecomp.herokuapp.com/` + type + `?platform=` + stream)
       .then(res => {
         console.log(res.data);
+        filter(res.data, rating);
+
       })
       .catch(res => {
         console.log('Error getting API');
       })
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
+}
+
+function filter(apiData, rating) {
+    for (var i = 0; i < apiData.length; i++) {
+        if (apiData[i].rating === rating){
+            console.log(apiData[i])
+        }
+    }
+    console.log('Hey a function works!')
 }
 
 
@@ -161,7 +172,7 @@ function Landing() {
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="rating" className="dropdown-content">
                             <div onClick={populateForm} className="dropdown-item">
-                                G
+                                NR
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
                                 PG
@@ -212,23 +223,11 @@ function Landing() {
                             <div onClick={populateForm} className="dropdown-item">
                                 Netflix
                             </div>
-                            <div onClick={populateForm} className="dropdown-item">
-                                Hulu
-                            </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
                                 HBO Max
                             </div>
                             <div onClick={populateForm} className="dropdown-item is-active">
-                                YouTube
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
                                 Amazon Prime Video
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Disney Plus
-                            </div>
-                            <div onClick={populateForm} className="dropdown-item is-active">
-                                Paramount Plus
                             </div>
                         </div>
                     </div>
