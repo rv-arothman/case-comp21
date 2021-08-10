@@ -26,8 +26,17 @@
     font-size: 100px;
 }
 
+.title {
+    color: #c00;
+    font-size: 45px;
+}
+
 .subtitle {
     font-size: 40px;
+}
+
+.year {
+    font-size: 30px;
 }
 
 .main-button-selection {
@@ -92,4 +101,26 @@
     font-size: 30px;
     padding-left: 3rem;
     padding-right: 3rem;
+}
+
+.stream {
+    font-family: 'TWCen';
+    border-radius: 25px;
+    background-color: #c00;
+    color: black;
+    font-size: 16px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.moviePoster {
+    max-height: 200px;
+}
+
+.movies {
+    width: 50%;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-top: 0px;
 }
