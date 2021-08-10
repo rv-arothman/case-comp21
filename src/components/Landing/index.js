@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import 'bulma/css/bulma.min.css';
-import './styles.css'
+import './styles.css';
+import axios from 'axios';
 
 //let jsonFormObjectStringify= "";
 
@@ -60,7 +61,14 @@ const submitForm = event => {
     const type = document.getElementById('type-button').innerHTML;
     const rating = document.getElementById('rating-button').innerHTML;
     const year = document.getElementById('year-button').innerHTML;
-    const stream = document.getElementById('stream-button').innerHTML;
+    let stream = document.getElementById('stream-button').innerHTML;
+
+    let streamObj = {
+        "Netflix" : 'netflix',
+        "HBO Max" : 'hbo',
+        "Amazon Prime Video" : 'amazon_prime'
+    }
+    stream = streamObj[stream];
 
     const jsonObject = {
         popOrRand: popOrRand,
@@ -72,6 +80,15 @@ const submitForm = event => {
     }
 
     console.log(jsonObject);
+    console.log(`https://rv-casecomp.herokuapp.com/` + type + `?platform=` + stream);
+
+    axios.get(`https://rv-casecomp.herokuapp.com/` + type + `?platform=` + stream)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(res => {
+        console.log('Error getting API');
+      })
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
 
@@ -127,7 +144,7 @@ function Landing() {
                                 Movie
                             </div>
                             <div onClick={populateForm}className="dropdown-item is-active">
-                                TV Show
+                                Show
                             </div>
                         </div>
                     </div>
