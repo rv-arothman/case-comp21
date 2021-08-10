@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faTicketAlt } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faExclamationCircle, faTicketAlt } from '@fortawesome/free-solid-svg-icons'
 import 'bulma/css/bulma.min.css';
 import './styles.css'
+import React from 'react';
 
 //let jsonFormObjectStringify= "";
 
@@ -77,8 +78,9 @@ const submitForm = event => {
 }
 
 
-function Landing() {
+class Landing extends React.Component {
 
+    render() {
     return (
         <section className="main">
             <div className="main-header">
@@ -217,8 +219,8 @@ function Landing() {
                 <button onClick={submitForm} id="popular" className="button pop-rand">POPULAR</button>
                 <button onClick={submitForm} id="random" className="button pop-rand">RANDOM</button>
             </div>
-
         </section>)
+    }
 }
 
 export default Landing;
