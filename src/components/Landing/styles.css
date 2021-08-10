@@ -17,11 +17,15 @@
 }
 
 .main-button-selection {
-    padding-left: 20rem;
-    padding-right: 20rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
     display: flex;
     justify-content: space-evenly;
 
+}
+
+.select:not(.is-multiple):not(.is-loading)::after { 
+    border-color: #c00;
 }
 
 .button {
@@ -40,10 +44,6 @@
     justify-content: space-between;
     align-items: center;
 }
-
-/* .button-arrow {
-    background-color: #c00;
-} */
 
 .main-button-name {
     font-family: 'TWCen';
