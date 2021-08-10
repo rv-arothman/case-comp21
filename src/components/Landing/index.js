@@ -48,6 +48,10 @@ function triggerStream() {
     }
 }
 
+function removeButton() {
+    document.getElementById('main-error-msg').style.display = 'none';
+}
+
 const populateForm = event => {
     let parentID = event.target.parentNode.id;
     parentID += '-button';
@@ -62,17 +66,23 @@ const submitForm = event => {
     const year = document.getElementById('year-button').innerHTML;
     const stream = document.getElementById('stream-button').innerHTML;
 
-    const jsonObject = {
-        popOrRand: popOrRand,
-        genre: genre,
-        type: type,
-        rating: rating,
-        year: year,
-        stream: stream
+    if (type === "TYPE") {
+        document.getElementById('main-error-msg').style.display = 'flex';
+    } else {
+        const jsonObject = {
+            popOrRand: popOrRand,
+            genre: genre,
+            type: type,
+            rating: rating,
+            year: year,
+            stream: stream
+        }
+
+        console.log(jsonObject);
+        return jsonObject;
     }
 
-    console.log(jsonObject);
-    return jsonObject;
+
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
 
@@ -90,7 +100,19 @@ function Landing() {
                 <h1 className="header">DREAM STREAM</h1>
                 <h3 className="subtitle">RV MOVIE PICKS</h3>
             </div>
+            
             <div className="main-button-selection">
+            <div id="main-error-msg" className="main-error-msg">
+                <article className="message is-danger">
+                    <div className="message-header">
+                        <p>Media Type Required</p>
+                        <button onClick={removeButton} className="delete" aria-label="delete"></button>
+                    </div>
+                    <div className="message-body">
+                        Please select a media type in the 'TYPE' dropdown.
+                    </div>
+                </article>
+            </div>
                 <div id="genre-dropdown" className="dropdown" onClick={triggerGenre}>
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -123,7 +145,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="type-button" className="main-button-name">TYPE</span>
-                                    <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
+                                <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -141,13 +163,13 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="rating-button" className="main-button-name">RATING</span>
-                                    <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
+                                <FontAwesomeIcon className="button-arrow icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
                         <div id="rating" className="dropdown-content">
                             <div onClick={populateForm} className="dropdown-item">
-                                G
+                                NR
                             </div>
                             <div onClick={populateForm} className="dropdown-item">
                                 PG
@@ -158,9 +180,6 @@ function Landing() {
                             <div onClick={populateForm} className="dropdown-item">
                                 R
                             </div>
-                            <div onClick={populateForm} className="dropdown-item">
-                                NR
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -168,7 +187,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="year-button" className="main-button-name">YEAR</span>
-                                    <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
+                                <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
@@ -192,7 +211,7 @@ function Landing() {
                     <div className="dropdown-trigger">
                         <button className="button button-size" aria-haspopup="true" aria-controls="dropdown-menu">
                             <div className="button-text-container"><span id="stream-button" className="main-button-name">STREAM</span>
-                                    <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
+                                <FontAwesomeIcon className="icon is-large" icon={faAngleDown} /></div>
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
