@@ -73,21 +73,29 @@ const submitForm = event => {
     }
     stream = streamObj[stream];
 
-    const jsonObject = {
-        popOrRand: popOrRand,
-        genre: genre,
-        type: type,
-        rating: rating,
-        year: year,
-        stream: stream
+    if (type === "TYPE") {
+        document.getElementById('main-error-msg').style.display = 'flex';
+    } else {
+        const jsonObject = {
+            popOrRand: popOrRand,
+            type: type,
+            rating: rating,
+            year: year,
+            stream: stream
+        }
+
+        console.log(jsonObject);
+
+        if (stream === 'STREAM') {
+            justMediaAPI(jsonObject);
+        } else {
+            mediaStreamAPI(jsonObject);
+        }
+
+        document.getElementById('result').style.display = 'flex';
+        return jsonObject;
     }
     console.log(jsonObject);
-
-    if (stream === 'STREAM') {
-        justMediaAPI(jsonObject);
-    } else {
-        mediaStreamAPI(jsonObject);
-    }
 
     //jsonFormObjectStringify = JSON.stringify(jsonObject);
 }
@@ -96,7 +104,10 @@ function justMediaAPI(paraData) {
     axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type)
     .then(res => {
       console.log(res.data);
-      var filteredData = filter(res.data, paraData);
+      var filteredData = res.data;
+      if (paraData.type === 'Movie') {
+          filteredData = filter(res.data, paraData);
+      }
       console.log(filteredData);
     })
     .catch(res => {
@@ -110,7 +121,10 @@ function mediaStreamAPI(paraData) {
     axios.get(`https://rv-casecomp.herokuapp.com/` + paraData.type + `?platform=` + paraData.stream)
       .then(res => {
         console.log(res.data);
-        var filteredData = filter(res.data, paraData);
+        var filteredData = res.data;
+        if (paraData.type === 'Movie') {
+            filteredData = filter(res.data, paraData);
+        }
         console.log(filteredData);;
       })
       .catch(res => {
