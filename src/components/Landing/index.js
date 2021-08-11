@@ -119,7 +119,16 @@ function justMediaAPI(paraData) {
       };
       console.log(filteredData);
       console.log("filteredData",filteredData)
-      getMovieCards(filteredData);
+
+      if(paraData.popOrRand == "random") {
+        const length = filteredData.length;
+        const randomMovie = Math.floor(Math.random() * length);
+        console.log(randomMovie);
+        console.log(filteredData[randomMovie]);
+        getMovieCards([filteredData[randomMovie]]);
+    } else {
+        getMovieCards(filteredData);
+    }
       
       console.log("movie card", cards);
       return filteredData;
@@ -138,7 +147,20 @@ function mediaStreamAPI(paraData) {
         var filteredData = filter(res.data, paraData);
         console.log(filteredData);
         console.log("filteredData",filteredData)
-        getMovieCards(filteredData);
+
+        if(paraData.popOrRand == "random") {
+            const length = filteredData.length;
+            const randomMovie = Math.floor(Math.random() * length);
+            console.log(randomMovie);
+            console.log(filteredData[randomMovie]);
+            getMovieCards([filteredData[randomMovie]]);
+        } else {
+            getMovieCards(filteredData);
+        }
+    
+        
+
+        
         console.log("movie card", cards);
         return filteredData;
       })
@@ -180,10 +202,7 @@ function filter(apiData, paraData) {
 }
 
 async function getMovieCards(movies) {
-
     for(let i = 0; i < movies.length; i++) {
-
-        
         cards.push(<div value={ MovieCard(movies[i]) } />);
     }
 }
