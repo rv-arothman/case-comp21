@@ -7,13 +7,30 @@
 }
 
 .main-header {
-    padding-top: 6rem;
+    padding-top: 4.5rem;
     padding-bottom: 5rem;
 }
 
 .main-ticket-header {
     display: flex;
 
+}
+
+.main-error-msg {
+    display: none;
+    justify-content: center;
+    flex: 30%;
+    position: absolute;
+    z-index: 1;
+    top: 24rem;
+}
+
+.message-body {
+    font-size: 20px;
+}
+
+.message.is-danger .message-header {
+    background-color: #c00;
 }
 
 .ticket {
@@ -101,6 +118,12 @@
     font-size: 30px;
     padding-left: 3rem;
     padding-right: 3rem;
+}
+
+.main-results-container {
+    display: none;
+    justify-content: space-evenly;
+    padding-top: 1.5rem;
 }
 
 .stream {

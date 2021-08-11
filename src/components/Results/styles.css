@@ -1,0 +1,40 @@
+.main-results {
+    text-align: center;
+    background-color: #9cc;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'TWCen'
+}
+
+.main-results-arrow-container {
+    display:flex;
+    justify-content: start;
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+
+.main-results-arrow {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.icon.results {
+    color: #c00;
+}
+
+.main-results-nav {
+    padding-left: 2rem;
+    font-size: 30px;
+}
+
+
+.main-results-header {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.results-header {
+    color: #c00;
+    font-size: 75px;
+}
