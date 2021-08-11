@@ -45,10 +45,12 @@ function triggerStream() {
     }
 }
 
+// removes error message when 'x' button is clicked
 function removeButton() {
     document.getElementById('main-error-msg').style.display = 'none';
 }
 
+// populates drop box with the selection you chose
 const populateForm = event => {
     let parentID = event.target.parentNode.id;
     parentID += '-button';
