@@ -7,7 +7,8 @@ import './styles.css';
 import axios from 'axios';
 
 let jsonObject = {};
-
+ 
+// functions show the dropdown categories upon click
 function triggerType() {
     if (document.getElementById("type-dropdown").classList.contains("is-active")) {
         document.getElementById("type-dropdown").classList.remove("is-active");
@@ -42,16 +43,19 @@ function triggerStream() {
     }
 }
 
+// removes error message when 'x' button is clicked
 function removeButton() {
     document.getElementById('main-error-msg').style.display = 'none';
 }
 
+// populates drop box with the selection you chose
 const populateForm = event => {
     let parentID = event.target.parentNode.id;
     parentID += '-button';
     document.getElementById(parentID).innerHTML = event.target.innerHTML;
 }
 
+// submits the form and creates a json object of the selections you chose
 const submitForm = event => {
     const popOrRand = event.target.id;
     const type = document.getElementById('type-button').innerHTML;
@@ -92,7 +96,20 @@ const submitForm = event => {
     }
     console.log(jsonObject);
 
-    //jsonFormObjectStringify = JSON.stringify(jsonObject);
+        /*
+    the intent of this was to have the json object logged into a separate file to keep track
+    of all the different responses for user analytics, the fs package ended up being
+    incompatible with react
+    */
+
+    /*
+    const fs = require('fs')
+        fs.writeFile('logging.txt', jsonObject, (err) => {
+      
+        // In case of a error throw err.
+        if (err) throw err;
+    })
+    */
 }
 
 function justMediaAPI(paraData) {
