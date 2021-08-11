@@ -5,8 +5,24 @@ import { Link } from 'react-router-dom';
 import 'bulma/css/bulma.min.css';
 import './styles.css';
 import axios from 'axios';
+import { saveAs } from 'file-saver';
+import fs from 'fs';
+
+//var FileSaver = require('file-saver');
+
+
+//let fs = require("file-system");
+
+//let fs = require('browserify-fs');
+
+// var log4js = require("log4js");
+// var logger = log4js.getLogger();
+// logger.level = "debug";
+
 
 let jsonObject = {};
+
+//const writeFileP = require("write-file-p");
 
 function triggerType() {
     if (document.getElementById("type-dropdown").classList.contains("is-active")) {
@@ -71,7 +87,7 @@ const submitForm = event => {
     if (type === "TYPE") {
         document.getElementById('main-error-msg').style.display = 'flex';
     } else {
-        const jsonObject = {
+        jsonObject = {
             popOrRand: popOrRand,
             type: type,
             rating: rating,
@@ -80,11 +96,8 @@ const submitForm = event => {
         }
 
         document.getElementById('result').style.display = 'flex';
-
-        console.log(jsonObject);
-        return jsonObject;
     }
-    console.log(jsonObject);
+    console.error(jsonObject);
 
     if (stream === 'STREAM') {
         justMediaAPI(jsonObject);
@@ -92,7 +105,79 @@ const submitForm = event => {
         mediaStreamAPI(jsonObject);
     }
 
-    //jsonFormObjectStringify = JSON.stringify(jsonObject);
+    //const fs = require('fs')
+
+//     const content = 'Some content!'
+
+// fs.appendFile('logtest.txt', content, err => {
+//   if (err) {
+//     console.error(err)
+//     return
+//   }
+  //done!
+// })
+
+    // var file = new File(["Hello, world!"], "hello world3.txt", {type: "text/plain;charset=utf-8"});
+    // // FileSaver.saveAs(file);
+    // FileSaver.
+
+//     const { exec } = require('child_process');
+// exec('cat *.js bad_file | wc -l', (err, stdout, stderr) => {
+//   if (err) {
+//     // node couldn't execute the command
+//     return;
+//   }
+
+//   // the *entire* stdout and stderr (buffered)
+//   console.log(`stdout: ${stdout}`);
+//   console.log(`stderr: ${stderr}`);
+// });
+
+    //logger.debug("Some debug messages");
+
+    // fs.mkdir('/home', function() {
+    //     fs.writeFile('/home/logging.txt', 'texting123', function() {
+    //         fs.readFile('/home/logging.txt', 'utf-8', function(err, data) {
+    //             console.log(data);
+    //         });
+    //     });
+    // }); 
+
+   
+        // fs.writeFile('src/components/Landing/logging.txt', 'Hello world!\n', function(err, data) {
+        //         console.log("wrote to file");
+        // });
+    
+
+    //let jsonFormObjectStringify = JSON.stringify(jsonObject);
+
+    //console.log(jsonFormObjectStringify)
+
+    // async function write() {
+    //     try {
+    //       await fs.writeFile('logging.txt', jsonFormObjectStringify);
+    //     } catch (error) {
+    //       console.error(`Got an error trying to write to a file: ${error.message}`);
+    //     }
+    //   }
+
+    //   (async function () {
+    //     await write();
+    //   })();
+
+    // fs.writeFile('logging.txt', jsonObject, (err) => {
+      
+    //     // In case of a error throw err.
+    //     if (err) throw err;
+    // })
+
+    // writeFileP(`${__dirname}/logging.txt`, jsonObject, (err, data) => {
+    //     console.log(err || data);
+    // });
+
+    // fs.writeFile('src/test.txt', 'aaa', function(err) {})
+
+    return jsonObject;
 }
 
 function justMediaAPI(paraData) {

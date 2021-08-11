@@ -8,7 +8,7 @@
 
 .main-results-arrow-container {
     display:flex;
-    justify-content: start;
+    justify-content: flex-start;
     padding-top: 2rem;
     padding-left: 2rem;
 }
